@@ -1,0 +1,28 @@
+{
+  "name": "whoomap",
+  "version": "1.0.0",
+  "description": "Displays a graphical reperesentation of environmental data, such as bird migration and ozone concertration in Canada.",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaximFrumkin/WhooMap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaximFrumkin/WhooMap/issues"
+  },
+  "homepage": "https://github.com/MaximFrumkin/WhooMap#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security"
+  }
+}
