@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>d3.js with leaflet.js</title>
+    <style>
+        @import url(http://cdn.leafletjs.com/leaflet-0.6.1/leaflet.css);
+    </style>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+
+    <!--link 
+        rel="stylesheet" 
+        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
+    /-->
+
+
+
+    <script src="utils.js"></script>
+
+
+
+
+
+</head>
+
+<body>
+
+    <div id="map" style="width: 600px; height: 400px"></div>
+
+    <script>
+        //const sample = fetch('mock.json').then(res => res.json()).then(data => console.log(data));
+
+
+
+        var map = L.map('map').setView([43.4516,-80.31246], 13);
+        // mapLink = 
+        //     '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        // L.tileLayer(
+        //     'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     attribution: '&copy; ' + mapLink + ' Contributors',
+        //     maxZoom: 18,
+        //     }).addTo(map);
+
+        var toolserver = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png');
+        var stamen = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', { attribution: 'Add some attributes here!' }).addTo(map);
+        var baseLayers = { "stamen": stamen, "toolserver-mapnik": toolserver };
+        L.control.layers(baseLayers).addTo(map);
+        console.log("FI");
+
+
+        //for the shapefiles in the folder called 'files' with the name pandr.shp
+        /*const polystyle = {
+            fillColor: 'blue',
+            weight: 2,
+            opacity: 1,
+            color: 'red',  //Outline color
+            fillOpacity: 0.7
+        };
+        
+        L.geoJson(geojson_parsed, { style: polystyle }).addTo(map);
+        */
+
+
+
+
+        // Initialize the SVG layer
+        map._initPathRoot()
+        // We pick up the SVG from the map object
+        var svg = d3.select("#map").select("svg"),
+            g = svg.append("g");
+
+        
+
+        d3.json("circles.json", function (collection) {
+            // Add a LatLng object to each item in the dataset
+            collection.objects.forEach(function (d) {
+                d.LatLng = new L.LatLng(d.circle.coordinates[0],d.circle.coordinates[1])
+
+
+                
+            })
+
+            
+            /*
+            for (var i = 0; i < 5; i++) {
+            svg.append("rect").attr("id", "rec" + i).attr("x", i * 30 + 10).attr("class", "rec");
+            }
+            
+
+            g.forEach(function(element){
+                console.log(element);
+                
+            })
+            */
+
+            var getcolor = function(bird){
+                // small number of birds means Learge Green number = 255
+                
+                var rate = 20
+
+
+                return "rgb(0, "+ rate.toString() + ", 0)"
+            }
+
+            var feature = g.selectAll("circle")
+                .data(collection.objects)
+                .enter().append("circle")
+                .style("stroke", "black")
+                .style("opacity", .8)
+                .style("fill", getcolor(20/*bird*/,collection.objects))
+                .attr("r", 20);
+
+
+                feature[0].forEach(function(element){
+                console.log(element);
+                
+                
+            })
+
+
+            console.log(collection);
+            
+            
+            //console.log(feature[0].findIndex());
+            
+
+            // console.log(feature);
+
+            // console.log(feature);
+
+            // console.log(feature[0]);
+
+            // console.log(feature[0][0]);
+            
+
+            /*
+            g.each(function(i) {
+                this.attr('', 'shiny_new_id_' + i)
+                })
+
+            */
+
+
+            /*
+            feature.forEach(function(element){
+                console.log(element);
+                
+                if(element.Province == 62){
+                    console.log("YES");
+                    element.style("fill", "black")
+                    
+                }
+
+            });
+            */
+
+            map.on("viewreset", update);
+            update();
+
+            function update() {
+                feature.attr("transform",
+                    function (d) {
+                        return "translate(" +
+                            map.latLngToLayerPoint(d.LatLng).x + "," +
+                            map.latLngToLayerPoint(d.LatLng).y + ")";
+                    }
+                )
+            }
+        })
+    </script>
+</body>
+
+</html>
