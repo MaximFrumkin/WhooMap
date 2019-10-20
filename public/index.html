@@ -11,14 +11,10 @@
 
     <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 
-    <!--link 
-        rel="stylesheet" 
-        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
-    /-->
 
 
 
-    <script src="utils.js"></script>
+    <!--<script src="utils.js"></script> -->
 
 
 
@@ -28,12 +24,10 @@
 
 <body>
 
-    <div id="map" style="width: 600px; height: 400px"></div>
+    <div id="map" style="width: 1600px; height: 1200px"></div>
 
     <script>
         //const sample = fetch('mock.json').then(res => res.json()).then(data => console.log(data));
-
-
 
         var map = L.map('map').setView([43.4516,-80.31246], 13);
         // mapLink = 
@@ -79,96 +73,197 @@
             collection.objects.forEach(function (d) {
                 d.LatLng = new L.LatLng(d.circle.coordinates[0],d.circle.coordinates[1])
 
-
+                console.log(d.LatLng);
+                console.log(d.LatLng);
                 
-            })
-
-            
-            /*
-            for (var i = 0; i < 5; i++) {
-            svg.append("rect").attr("id", "rec" + i).attr("x", i * 30 + 10).attr("class", "rec");
-            }
-            
-
-            g.forEach(function(element){
-                console.log(element);
-                
-            })
-            */
-
-            var getcolor = function(bird){
-                // small number of birds means Learge Green number = 255
-                
-                var rate = 20
+                console.log(d.circle.color)
 
 
-                return "rgb(0, "+ rate.toString() + ", 0)"
-            }
-
-            var feature = g.selectAll("circle")
-                .data(collection.objects)
-                .enter().append("circle")
-                .style("stroke", "black")
-                .style("opacity", .8)
-                .style("fill", getcolor(20/*bird*/,collection.objects))
-                .attr("r", 20);
-
-
-                feature[0].forEach(function(element){
-                console.log(element);
-                
-                
-            })
-
-
-            console.log(collection);
-            
-            
-            //console.log(feature[0].findIndex());
-            
-
-            // console.log(feature);
-
-            // console.log(feature);
-
-            // console.log(feature[0]);
-
-            // console.log(feature[0][0]);
-            
-
-            /*
-            g.each(function(i) {
-                this.attr('', 'shiny_new_id_' + i)
-                })
-
-            */
-
-
-            /*
-            feature.forEach(function(element){
-                console.log(element);
-                
-                if(element.Province == 62){
+                var getcolor = function(bird, obj){
+                    // small number of birds means Learge Green number = 255
+                    console.log(obj);
                     console.log("YES");
-                    element.style("fill", "black")
                     
+                    
+                    
+                    var rate = 205
+
+
+                    return "rgb(50, "+ rate.toString() + ", 50)"
                 }
 
-            });
-            */
+                var feature = g.selectAll("circle")
+                    .data(collection.objects)
+                    .enter().append("circle")
+                    .style("stroke", "black")
+                    .style("fill", function(d){return d.circle.color})
+                    //.style("fill", getcolor(20/*bird*/))
+                    .attr("r", 20);
 
-            map.on("viewreset", update);
-            update();
+                    /*
+                    feature[0].forEach(function(element){
+                    console.log(element);
+                    
+                    
+                    })*/
 
-            function update() {
-                feature.attr("transform",
-                    function (d) {
-                        return "translate(" +
-                            map.latLngToLayerPoint(d.LatLng).x + "," +
-                            map.latLngToLayerPoint(d.LatLng).y + ")";
+                
+                
+
+
+                
+                
+                
+                //console.log(feature[0].findIndex());
+                
+
+                // console.log(feature);
+
+                // console.log(feature);
+
+                // console.log(feature[0]);
+
+                // console.log(feature[0][0]);
+                
+
+                /*
+                g.each(function(i) {
+                    this.attr('', 'shiny_new_id_' + i)
+                    })
+
+                */
+
+
+                /*
+                feature.forEach(function(element){
+                    console.log(element);
+                    
+                    if(element.Province == 62){
+                        console.log("YES");
+                        element.style("fill", "black")
+                        
                     }
-                )
-            }
+
+                });
+                */
+                map.on("viewreset", update);
+                update();
+
+                function update() {
+                    feature.attr("transform",
+                        function (da) {
+                            console.log(da.LatLng);
+                            try{
+                                return "translate(" +
+                                map.latLngToLayerPoint(da.LatLng).x + "," +
+                                map.latLngToLayerPoint(da.LatLng).y + ")";
+                            }catch(e){
+                                console.log(e);
+                                
+
+                            }
+                            
+                        }
+                    )
+                }
+
+
+
+                
+            })
+
+                /*
+                for (var i = 0; i < 5; i++) {
+                svg.append("rect").attr("id", "rec" + i).attr("x", i * 30 + 10).attr("class", "rec");
+                }
+                
+
+                g.forEach(function(element){
+                    console.log(element);
+                    
+                })
+                */
+
+                // var getcolor = function(bird, obj){
+                //     // small number of birds means Learge Green number = 255
+                //     console.log(obj);
+                //     console.log("YES");
+                    
+                    
+                    
+                //     var rate = 205
+
+
+                //     return "rgb(50, "+ rate.toString() + ", 50)"
+                // }
+
+                // var feature = g.selectAll("circle")
+                //     .data(collection.objects)
+                //     .enter().append("circle")
+                //     .style("stroke", "black")
+                //     //.style("fill", getcolor(20/*bird*/))
+                //     .attr("r", 20);
+
+                //     /*
+                //     feature[0].forEach(function(element){
+                //     console.log(element);
+                    
+                    
+                //     })*/
+
+                
+                
+
+
+                
+                
+                
+                // //console.log(feature[0].findIndex());
+                
+
+                // // console.log(feature);
+
+                // // console.log(feature);
+
+                // // console.log(feature[0]);
+
+                // // console.log(feature[0][0]);
+                
+
+                // /*
+                // g.each(function(i) {
+                //     this.attr('', 'shiny_new_id_' + i)
+                //     })
+
+                // */
+
+
+                // /*
+                // feature.forEach(function(element){
+                //     console.log(element);
+                    
+                //     if(element.Province == 62){
+                //         console.log("YES");
+                //         element.style("fill", "black")
+                        
+                //     }
+
+                // });
+                // */
+
+                // map.on("viewreset", update);
+                // update();
+
+                // function update() {
+                //     feature.attr("transform",
+                //         function (d) {
+                //             return "translate(" +
+                //                 map.latLngToLayerPoint(d.LatLng).x + "," +
+                //                 map.latLngToLayerPoint(d.LatLng).y + ")";
+                //         }
+                //     )
+                // }
+
         })
     </script>
 </body>

@@ -1,0 +1,15 @@
+{"objects":[
+    {"circle":{"coordinates":[53.5461,-113.4938],"Province":4, "name": "Alberta", "color": "rgb(0,100,0)"}},
+    {"circle":{"coordinates":[49.2827,-123.1207],"Province":11, "name": "British Columbia", "color": "rgb(0,30,0)"}},
+    {"circle":{"coordinates":[62.4540,-114.3718],"Province":43, "name": "Northwest Territories", "color": "rgb(0,50,0)"}},
+    {"circle":{"coordinates":[49.8951,-97.1384],"Province":45, "name": "Manitoba", "color": "rgb(0,250,0)"}},
+    {"circle":{"coordinates":[45.9636,-66.6431],"Province":56, "name": "New Brunswick", "color": "rgb(0,150,0)"}},
+    {"circle":{"coordinates":[47.5615,-52.7126],"Province":57, "name": "Newfoundland and Labrador", "color": "rgb(0,180,0)"}},
+    {"circle":{"coordinates":[63.7467,-68.5170],"Province":62, "name": "Nunavuts", "color": "rgb(0,200,0)"}},
+    {"circle":{"coordinates":[44.6488,-63.5752],"Province":65, "name": "Nova Scotia", "color": "rgb(0,210,0)"}},
+    {"circle":{"coordinates":[43.6532,-79.3832],"Province":68, "name": "Ontario", "color": "rgb(0,75,0)"}},
+    {"circle":{"coordinates":[46.2382,-63.1311],"Province":75, "name": "Prince Edward Island", "color": "rgb(0,120,0)"}},
+    {"circle":{"coordinates":[46.8139,-71.2080],"Province":76, "name": "Quebec", "color": "rgb(0,190,0)"}},
+    {"circle":{"coordinates":[50.4452,-104.6189],"Province":79, "name": "Saskatchewan", "color": "rgb(0,70,0)"}},
+    {"circle":{"coordinates":[60.7212,-135.0568],"Province":93, "name": "Yukon", "color": "rgb(0,60,0)"}}
+    ]}
