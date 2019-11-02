@@ -3,3 +3,4 @@ node_modules/
 gpr_000a11a_e/
 public/lib/
 GitRepo/
+public/*.json*
