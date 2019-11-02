@@ -1,0 +1,36 @@
+{
+ "type": "Feature",
+ "geometry": {
+   "type": "Point",
+   "coordinates": [-86, -174]
+ },
+ "properties": {
+   "concentration": "1"
+},
+{
+ "type": "Feature",
+ "geometry": {
+   "type": "Point",
+   "coordinates": [-86, -171]
+ },
+ "properties": {
+   "concentration": "1.1"
+},
+{
+ "type": "Feature",
+ "geometry": {
+   "type": "Point",
+   "coordinates": [-86, -168]
+ },
+ "properties": {
+   "concentration": "1.5"
+},
+{
+ "type": "Feature",
+ "geometry": {
+   "type": "Point",
+   "coordinates": [-86, -148]
+ },
+ "properties": {
+   "concentration": "0.8"
+},
