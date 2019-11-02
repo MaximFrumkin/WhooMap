@@ -1,0 +1,15 @@
+{"objects":[
+    {"circle":{"coordinates":[53.5461,-113.4938],"Province":4, "name": "Alberta"}},
+    {"circle":{"coordinates":[49.2827,-123.1207],"Province":11, "name": "British Columbia"}},
+    {"circle":{"coordinates":[62.4540,-114.3718],"Province":43, "name": "Northwest Territories"}},
+    {"circle":{"coordinates":[49.8951,-97.1384],"Province":45, "name": "Manitoba"}},
+    {"circle":{"coordinates":[45.9636,-66.6431],"Province":56, "name": "New Brunswick"}},
+    {"circle":{"coordinates":[47.5615,-52.7126],"Province":57, "name": "Newfoundland and Labrador"}},
+    {"circle":{"coordinates":[63.7467,-68.5170],"Province":62, "name": "Nunavuts"}},
+    {"circle":{"coordinates":[44.6488,-63.5752],"Province":65, "name": "Nova Scotia"}},
+    {"circle":{"coordinates":[43.6532,-79.3832],"Province":68, "name": "Ontario"}},
+    {"circle":{"coordinates":[46.2382,-63.1311],"Province":75, "name": "Prince Edward Island"}},
+    {"circle":{"coordinates":[46.8139,-71.2080],"Province":76, "name": "Quebec"}},
+    {"circle":{"coordinates":[50.4452,-104.6189],"Province":79, "name": "Saskatchewan"}},
+    {"circle":{"coordinates":[60.7212,-135.0568],"Province":93, "name": "Yukon"}}
+    ]}

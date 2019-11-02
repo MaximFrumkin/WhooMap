@@ -3,6 +3,8 @@ var express = require('express');
 var app = express();
 
 app.use(express.static('public'));
+app.use(express.static('dist'));
+app.use(express.static('data'));
 
 // This responds with "Hello World" on the homepage
 app.get('/', function (req, res) {
