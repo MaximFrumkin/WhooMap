@@ -30,6 +30,7 @@ var timer;
 var lgroup;
 var heat;
 
+let marker;
 jQuery(document).ready(function () {
     jQuery(".gas").change(function (e) {
         //debugger;
@@ -75,7 +76,7 @@ jQuery(document).ready(function () {
     */
 
     let default_marker = {"lat": 45, "lng": -76}
-    let marker = L.marker(default_marker).addTo(map);
+    marker = L.marker(default_marker).addTo(map);
     notify(default_marker,subArray_year)
     
 
@@ -94,8 +95,8 @@ jQuery(document).ready(function () {
         }
 
         marker = L.marker(e.latlng).addTo(map);
-        notify(e.latlng,subArray_year)
-        
+        let latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)} 
+        notify(latlng,subArray_year)
     
     }
     
@@ -149,7 +150,10 @@ function callMap() {
 }
 
 function createMap(gas, year) {
-    debugger;
+    //debugger;
+    console.log("Before FINALLY");
+    console.log("FINALLY : " + marker.getLatLng());
+
     if ((year !== null && year !== undefined) && year !== '') {
         subArray = addressPoints.filter(point => point[3] == gas && point[4] == year);
     } else {
@@ -186,8 +190,11 @@ function addLayer(gas, year) {
         "radius": 70,
         "blur": 10,
     });//.addTo(map)
+    console.log("Before FINALLY");
+    
 
-    //map.getBounds().contains(myMarker.getLatLng())
+    console.log("FINALLY : " + marker.getLatLng());
+     
 
     //notify(,subArray_year)
     map.addLayer(heat);
