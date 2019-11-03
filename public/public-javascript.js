@@ -1,7 +1,10 @@
+console.log("FIRE");
 
 
 
 //--------- Creating array from json
+
+
 var addressPoints = [];
 for (var i in myData) {
     var item = myData[i];
@@ -25,23 +28,34 @@ jQuery(document).ready(function () {
         //debugger;
         //addressPoints.filter(gases,e.data);
         //addressPoints.filter(point => point[1] == e.data);
+        
     });
     map = L.map('map', {
         center: [56.1304, -108.3468],
         zoom: 3,
         continuousWorld: true
     });  //.setView([56.1304, -108.3468], 5);
+    console.log("FIre1")
     var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
-    subArray = addressPoints.filter(point => point[3] == 'O3');
+    console.log("FIre3")
+    
+    subArray = addressPoints.filter(point => point[3] == 'O3').map(point => [point[0],point[1],point[2]])
+    
+
+    console.dir(subArray)
+    console.log("FIre4")
     heat = L.heatLayer(subArray, {
         "id": 'layer1',
         "gradient": { 0.4: 'yellow', 0.5: 'red', .6: 'blue' },
         "radius": 70,
         "blur": 10,
-    });//.addTo(map)
-    map.addLayer(heat);
+    }).addTo(map);
+    /*
+    console.log("FIre5")
+    map.addLayer(heat)
+    console.log("FIre2");
     //var animationControl = L.control.animation('control',{
     //    animationControl: true,
     //    playbackSpeed: 1000,
@@ -50,6 +64,7 @@ jQuery(document).ready(function () {
     //}).addTo(map);
 
     map.addLayer(heat);
+    */
 
     function onMapClick(e) {
         console.log("You clicked the map at " + e.latlng);
