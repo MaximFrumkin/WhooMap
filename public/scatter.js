@@ -34,13 +34,15 @@ var Ozone = {
     console.log("From notify: "+ lat);
     console.log("From notify: "+ lan);
     console.log("From notify: "+ oneyear);
- 
+    Plotly.purge('myDiv');
+    layout.title.text = 'Concentration vs Altitude, Year: ' + oneyear + ', Latitude: ' + lat + ', Longitude: ' + lan
+    Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
     
   };
  
   var layout = {
     title: {
-      text:'Concentration vs Altitude, Year: XXXX, Latitude: XXXX, Longitude: XXXX',
+      text:'Concentration vs Altitude, Year: ' + oneyear + ', Latitude: ' + lat + ', Longitude: ' + lan,
       font: {
         family: 'Courier New, monospace',
         size: 24
