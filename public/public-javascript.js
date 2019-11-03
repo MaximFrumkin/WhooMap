@@ -139,7 +139,7 @@ function playMap() {
     timer = setInterval(callMap, 1000);
 }
 function callMap() {
-    debugger;
+    //debugger;
     jQuery('#year').text(currentYear);
     createMap('O3', currentYear); //jQuery(".gas input[type='radio']:checked").val()
     currentYear++;
@@ -151,12 +151,14 @@ function callMap() {
 
 function createMap(gas, year) {
     //debugger;
-    console.log("Before FINALLY");
-    console.log("FINALLY : " + marker.getLatLng());
+    
+    
 
     if ((year !== null && year !== undefined) && year !== '') {
         subArray = addressPoints.filter(point => point[3] == gas && point[4] == year);
+        subArray_year = year;
     } else {
+        console.log("BIGFAIL")
         subArray = addressPoints.filter(point => point[3] == gas);
     }
     //--- Remove existing Map if exits
@@ -168,7 +170,11 @@ function createMap(gas, year) {
         "gradient": { 0.4: 'yellow', 0.5: 'red', .6: 'blue' },
         "radius": 70,
         "blur": 10,
-    });//.addTo(map)
+    });
+    
+    let latlng = {lat: getRound(marker.getLatLng().lat),lng:getRound(marker.getLatLng().lng)};
+    notify(latlng,subArray_year);
+
 }
 function addLayer(gas, year) {
     if (year !== null && year !== '') {
@@ -190,13 +196,13 @@ function addLayer(gas, year) {
         "radius": 70,
         "blur": 10,
     });//.addTo(map)
-    console.log("Before FINALLY");
+    
     
 
     console.log("FINALLY : " + marker.getLatLng());
      
 
-    //notify(,subArray_year)
+    
     map.addLayer(heat);
 }
 
