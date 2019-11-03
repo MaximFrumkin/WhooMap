@@ -65,15 +65,35 @@ jQuery(document).ready(function () {
 
     map.addLayer(heat);
     */
+    let marker = {};
 
     function onMapClick(e) {
         console.log("You clicked the map at " + e.latlng);
-        var marker = L.marker(e.latlng).addTo(map);
+
+        console.log("You clicked the map at " + e.latlng.lng);
+        console.log("changed lng to num from :" + e.latlng.lng + "to :" + getRound(e.latlng.lng));
+        console.log("changed lat to num from :" + e.latlng.lat + "to :" + getRound(e.latlng.lat));
+
+        if(marker != undefined){
+            
+            map.removeLayer(marker);
+        }
+
+        marker = L.marker(e.latlng).addTo(map);
     
     }
     map.on('click', onMapClick);
 
 });
+
+const getRound = (num) =>{
+    const intNum = Math.round(num)
+    return intNum
+}
+
+
+
+
 function playMap() {
     timer = setInterval(callMap, 1000);
 }
