@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
  })
 
  app.get('/data', function (req, res) {
-   console.log(req.query)
+   console.log(req.query);
   
   
 })
