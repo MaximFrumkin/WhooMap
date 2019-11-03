@@ -1,4 +1,11 @@
-
+// class Point {
+//     constructor(Lat,Lng,year) {
+//       this.Lat = Lat;
+//       this.Lng = Lng;
+//       this.year = year
+//     }
+//   }
+//   mycar = new Point("Ford");
 
 
 
@@ -40,12 +47,13 @@ jQuery(document).ready(function () {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
     console.log("FIre3")
-    
+    // ToDo must filter specific year
     subArray = addressPoints.filter(point => point[3] == 'O3').map(point => [point[0],point[1],point[2]])
-    
+    // ToDo must filter specific year
+    subArray_year = 2005;
 
-    console.dir(subArray)
-    console.log("FIre4")
+    
+    
     heat = L.heatLayer(subArray, {
         "id": 'layer1',
         "gradient": { 0.4: 'yellow', 0.5: 'red', .6: 'blue' },
@@ -65,7 +73,11 @@ jQuery(document).ready(function () {
 
     map.addLayer(heat);
     */
-    let marker = {};
+
+    let default_marker = {"lat": 45, "lng": -76}
+    let marker = L.marker(default_marker).addTo(map);
+    notify(default_marker,subArray_year)
+    
 
     function onMapClick(e) {
         console.log("You clicked the map at " + e.latlng);
@@ -82,12 +94,13 @@ jQuery(document).ready(function () {
         }
 
         marker = L.marker(e.latlng).addTo(map);
-        notify(e.latlng)
+        notify(e.latlng,subArray_year)
         
     
     }
+    
     map.on('click', onMapClick);
-    console.log(temp_var);
+    //console.log(temp_var);
     
 
 
@@ -156,8 +169,11 @@ function createMap(gas, year) {
 function addLayer(gas, year) {
     if (year !== null && year !== '') {
         subArray = addressPoints.filter(point => point[3] == gas && point[4] == year);
+        subArray_year = year
     } else {
         subArray = addressPoints.filter(point => point[3] == gas);
+        console.log("BiGFail");
+        
     }
     //--- Remove existing Map if exits
     if (typeof map !== 'undefined') {
@@ -170,6 +186,10 @@ function addLayer(gas, year) {
         "radius": 70,
         "blur": 10,
     });//.addTo(map)
+
+    //map.getBounds().contains(myMarker.getLatLng())
+
+    //notify(,subArray_year)
     map.addLayer(heat);
 }
 
