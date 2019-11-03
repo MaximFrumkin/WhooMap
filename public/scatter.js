@@ -23,7 +23,21 @@ var Ozone = {
   };
   
   var data = [ Ozone, Methane, CarbonDioxide ];
-  
+  var lat = 0;
+  var lan = 0;
+  var oneyear = 0;
+
+  const notify = (latlan,year) =>{
+    lat = latlan.lat;
+    lan = latlan.lng;
+    oneyear =  year;
+    console.log("From notify: "+ lat);
+    console.log("From notify: "+ lan);
+    console.log("From notify: "+ oneyear);
+ 
+    
+  };
+ 
   var layout = {
     title: {
       text:'Concentration vs Altitude, Year: XXXX, Latitude: XXXX, Longitude: XXXX',
@@ -57,11 +71,7 @@ var Ozone = {
   };
 
 
-const notify = (latlan) =>{
-  console.log(latlan);
-  
 
-}
 
   
   Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
