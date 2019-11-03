@@ -55,5 +55,13 @@ var Ozone = {
       }
     }
   };
+
+
+const notify = (latlan) =>{
+  console.log(latlan);
+  
+
+}
+
   
   Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});

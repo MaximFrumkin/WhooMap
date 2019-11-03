@@ -1,4 +1,4 @@
-console.log("FIRE");
+
 
 
 
@@ -73,6 +73,8 @@ jQuery(document).ready(function () {
         console.log("You clicked the map at " + e.latlng.lng);
         console.log("changed lng to num from :" + e.latlng.lng + "to :" + getRound(e.latlng.lng));
         console.log("changed lat to num from :" + e.latlng.lat + "to :" + getRound(e.latlng.lat));
+        get_Alt_Con(getRound(e.latlng.lat),getRound(e.latlng.lng))
+
 
         if(marker != undefined){
             
@@ -80,15 +82,40 @@ jQuery(document).ready(function () {
         }
 
         marker = L.marker(e.latlng).addTo(map);
+        notify(e.latlng)
+        
     
     }
     map.on('click', onMapClick);
+    console.log(temp_var);
+    
+
 
 });
 
 const getRound = (num) =>{
     const intNum = Math.round(num)
     return intNum
+}
+
+const get_Alt_Con = (lat, lng) =>{
+    axios.get('/data',{
+        params:{
+            "lat": lat,
+            "lng": lng
+        }
+    })
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
 }
 
 

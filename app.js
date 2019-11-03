@@ -12,6 +12,14 @@ app.get('/', function (req, res) {
     res.send('Hello GET');
  })
 
+ app.get('/data', function (req, res) {
+   console.log(req.query)
+  
+  
+})
+
+
+
  var server = app.listen(3000, function () {
     var host = server.address().address
     var port = server.address().port
