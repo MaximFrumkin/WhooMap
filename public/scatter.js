@@ -35,14 +35,14 @@ var Ozone = {
     console.log("From notify: "+ lan);
     console.log("From notify: "+ oneyear);
     Plotly.purge('myDiv');
-    layout.title.text = 'Concentration vs Altitude, Year: ' + oneyear + ', Latitude: ' + lat + ', Longitude: ' + lan
+    layout.title.text = 'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lan) + '° W';
     Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
     
   };
  
   var layout = {
     title: {
-      text:'Concentration vs Altitude, Year: ' + oneyear + ', Latitude: ' + lat + ', Longitude: ' + lan,
+      text:'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lan) + '° W',
       font: {
         family: 'Courier New, monospace',
         size: 24
