@@ -99,3 +99,11 @@ var currentYear = 2004;
             });//.addTo(map)
             map.addLayer(heat);
         }
+
+        console.log("TEST1");
+
+        var marker = L.marker([10.496093,-66.881935]).addTo(map).on('mouseover', onClick);
+        console.log("TEST2");
+        function onClick(e) {
+            console.log(this.getLatLng());
+        }
