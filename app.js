@@ -10,7 +10,7 @@ app.use(express.static('data'));
 app.get('/', function (req, res) {
     console.log("Got a GET request for the homepage");
     res.send('Hello GET');
- })
+ });
 
  app.get('/data', function (req, res) {
    console.log(req.query);
