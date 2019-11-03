@@ -1,31 +1,51 @@
-var fs = require('fs');
-var express = require('express');
-var app = express();
+const fs = require('fs');
+const express = require('express');
+const http = require('http');
+const csvdb = require("node-csv-query");
+const dbConnection = null;
+
+const app = express();
 
 app.use(express.static('public'));
 app.use(express.static('dist'));
 app.use(express.static('data'));
 
+
 // This responds with "Hello World" on the homepage
 app.get('/', function (req, res) {
     console.log("Got a GET request for the homepage");
     res.send('Hello GET');
- });
+});
 
- app.get('/data', function (req, res) {
-   console.log(req.query);
+app.get('/data', function (req, res) {
+  console.log(req.query);
   
   
 });
 
 
 
- var server = app.listen(3000, function () {
+var server = app.listen(3000, function () {
     var host = server.address().address;
     var port = server.address().port;
- 
+
     console.log("Example app listening at http://%s:%s", host, port);
- });
+});
+
+
+const readGasSummaryCSV = () => {
+  csvdb('gas_summary.csv').then(db => {
+      dbConnection = db;
+      dbConnection.findOne({orbitYear: 2005}).then(record=>{
+        console.log(record);
+      });
+  }).catch(err=>{
+    console.log(err);
+  });
+}
+
+readGasSummaryCSV();
+
 
 
 
