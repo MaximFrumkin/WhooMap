@@ -97,6 +97,7 @@ jQuery(document).ready(function () {
         marker = L.marker(e.latlng).addTo(map);
         let latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)} 
         notify(latlng,subArray_year)
+        
     
     }
     
@@ -137,7 +138,14 @@ const get_Alt_Con = (lat, lng) =>{
 
 function playMap() {
     timer = setInterval(callMap, 1000);
+
 }
+
+function stopMap(){
+    clearInterval(timer); 
+}
+
+
 function callMap() {
     //debugger;
     jQuery('#year').text(currentYear);
@@ -155,11 +163,11 @@ function createMap(gas, year) {
     
 
     if ((year !== null && year !== undefined) && year !== '') {
-        subArray = addressPoints.filter(point => point[3] == gas && point[4] == year);
+        subArray = addressPoints.filter(point => point[3] == gas && point[4] == year).map(point => [point[0],point[1],point[2]])
         subArray_year = year;
     } else {
         console.log("BIGFAIL")
-        subArray = addressPoints.filter(point => point[3] == gas);
+        subArray = addressPoints.filter(point => point[3] == gas).map(point => [point[0],point[1],point[2]]);
     }
     //--- Remove existing Map if exits
     if (typeof map !== 'undefined') {
@@ -170,7 +178,7 @@ function createMap(gas, year) {
         "gradient": { 0.4: 'yellow', 0.5: 'red', .6: 'blue' },
         "radius": 70,
         "blur": 10,
-    });
+    }).addTo(map);;
     
     let latlng = {lat: getRound(marker.getLatLng().lat),lng:getRound(marker.getLatLng().lng)};
     notify(latlng,subArray_year);
@@ -195,7 +203,7 @@ function addLayer(gas, year) {
         "gradient": { 0.4: 'yellow', 0.5: 'red', .6: 'blue' },
         "radius": 70,
         "blur": 10,
-    });//.addTo(map)
+    }).addTo(map);;
     
     
 
@@ -203,6 +211,6 @@ function addLayer(gas, year) {
      
 
     
-    map.addLayer(heat);
+    //map.addLayer(heat);
 }
 
