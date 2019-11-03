@@ -10,22 +10,22 @@ app.use(express.static('data'));
 app.get('/', function (req, res) {
     console.log("Got a GET request for the homepage");
     res.send('Hello GET');
- })
+ });
 
  app.get('/data', function (req, res) {
    console.log(req.query);
   
   
-})
+});
 
 
 
  var server = app.listen(3000, function () {
-    var host = server.address().address
-    var port = server.address().port
+    var host = server.address().address;
+    var port = server.address().port;
  
-    console.log("Example app listening at http://%s:%s", host, port)
- })
+    console.log("Example app listening at http://%s:%s", host, port);
+ });
 
 
 
