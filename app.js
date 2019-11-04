@@ -4,6 +4,7 @@ const fs = require('fs');
 const http = require('http');
 const express = require('express');
 const app = express();
+var jsonQuery = require('json-query');
 
 var data = [];
 
@@ -29,19 +30,14 @@ app.get('/data', function (req, res) {
   // now do the json query
 
 
-  var qResult = jsonQuery(`gasData[latitude=${qLat}
+  var qResult = jsonQuery(`gasData[*latitude=${qLat}
                             &longitude=${qLng}
                             &orbitYear=${qYear}]`,
-                            {data: data}).value;
-  
-  console.log(qResult);                          
-});
+                            {data: data}).value; 
+    // console.log(qResult);   
+    
+    res.send(qResult);
 
-var server = app.listen(3000, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log("Example app listening at http://%s:%s", host, port);
 });
 
 
