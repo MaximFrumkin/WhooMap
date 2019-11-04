@@ -27,7 +27,7 @@ var Ozone = {
   var lan = 0;
   var oneyear = 0;
 
-  const notify = (latlan,year) =>{
+  async function notify(latlan,year){
     lat = latlan.lat;
     lan = latlan.lng;
     oneyear =  year;
@@ -36,7 +36,40 @@ var Ozone = {
     console.log("From notify: "+ oneyear);
     Plotly.purge('myDiv');
     layout.title.text = 'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lan) + '° W';
-    data_Alt_con = await get_Alt_Con(getRound(latlng.lat),getRound(latlng.lng),subArray_year)
+
+    let promise = new Promise((res, rej) => {
+      get_Alt_Con((lat,lan,subArray_year) => res(ansData))
+    });
+    // wait until the promise returns us a value
+    data_Alt_con = await promise;
+    
+    console.log(data_Alt_con)
+    return data_Alt_con
+    data[0].x = []; //GasID4
+    data[0].y = []; //GasID4  
+    data[1].x = []; //GasID5
+    data[1].y = []; //GasID5
+    data[2].x = []; //GasID6
+    data[2].y = []; //GasID6
+    console.log("FFFFFF")
+    console.log(data_Alt_con)
+    /*try{
+      data_Alt_con.forEach(function(element){
+        if(element.gasID ==='4'){
+          data[0].x.push(element.altitude)
+          data[0].y.push(element.cAvg)
+        }else if (element.gasID ==='5'){
+          data[1].x.push(element.altitude)
+          data[1].y.push(element.cAvg)
+        }else if (element.gasID ==='6'){
+          data[2].x.push(element.altitude)
+          data[2].y.push(element.cAvg)
+        } 
+      });
+    }catch(e){
+      console.log(e)
+
+    }*/
 
     Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
     

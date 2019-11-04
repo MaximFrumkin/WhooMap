@@ -27,6 +27,7 @@ app.get('/data', function (req, res) {
   let qLng = req.query.lng;
   let qYear = req.query.year;
   
+  
   // now do the json query
 
 
@@ -34,7 +35,7 @@ app.get('/data', function (req, res) {
                             &longitude=${qLng}
                             &orbitYear=${qYear}]`,
                             {data: data}).value; 
-    // console.log(qResult);   
+    console.log(qResult);   
     
     res.send(qResult);
 
@@ -42,7 +43,7 @@ app.get('/data', function (req, res) {
 
 
 const csvToJSON = () => {
-  const csvFilePath = './test.csv';
+  const csvFilePath = './gas_summary.csv';
   const csv = require('csvtojson');
   csv()
   .fromFile(csvFilePath)

@@ -79,7 +79,8 @@ jQuery(document).ready(function () {
 
     let default_marker = {"lat": 45, "lng": -76}
     marker = L.marker(default_marker).addTo(map);
-    notify(default_marker,subArray_year)
+    data_Alt_con = notify(default_marker,subArray_year)
+    console.log()
     
 
     function onMapClick(e) {
@@ -95,8 +96,9 @@ jQuery(document).ready(function () {
         }
 
         marker = L.marker(e.latlng).addTo(map);
-        latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)} 
-        notify(latlng,subArray_year)
+        latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)};
+        data_Alt_con = notify(latlng,subArray_year);
+        console.log(data_Alt_con);
         
     
     }
@@ -113,7 +115,7 @@ const getRound = (num) =>{
     return intNum
 }
 
-async const get_Alt_Con = (lat, lng, year) =>{
+const get_Alt_Con = (lat, lng, year)=>{
     axios.get('/data',{
         params:{
             "lat": lat,
@@ -124,6 +126,7 @@ async const get_Alt_Con = (lat, lng, year) =>{
   .then(function (response) {
     // handle success
     console.log(response);
+    return response
   })
   .catch(function (error) {
     // handle error
@@ -180,10 +183,9 @@ function createMap(gas, year) {
     
     let latlng = {lat: getRound(marker.getLatLng().lat),lng:getRound(marker.getLatLng().lng)};
     
-    
-    
     // add data_Alt_con to notify
-    notify(latlng,subArray_year);
+    data_Alt_con = notify(latlng,subArray_year);
+    console.log(data_Alt_con);
 
 }
 function addLayer(gas, year) {
