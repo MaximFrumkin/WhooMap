@@ -113,7 +113,7 @@ const getRound = (num) =>{
     return intNum
 }
 
-const get_Alt_Con = (lat, lng, year) =>{
+async const get_Alt_Con = (lat, lng, year) =>{
     axios.get('/data',{
         params:{
             "lat": lat,
