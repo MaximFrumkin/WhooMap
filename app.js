@@ -1,15 +1,15 @@
+'use strict';
 const fs = require('fs');
-const express = require('express');
 const http = require('http');
-const csvdb = require("node-csv-query");
-const dbConnection = null;
+const express = require('express');
+
+
 
 const app = express();
 
 app.use(express.static('public'));
 app.use(express.static('dist'));
 app.use(express.static('data'));
-
 
 // This responds with "Hello World" on the homepage
 app.get('/', function (req, res) {
@@ -33,19 +33,33 @@ var server = app.listen(3000, function () {
 });
 
 
-const readGasSummaryCSV = () => {
-  csvdb('gas_summary.csv').then(db => {
-      dbConnection = db;
-      dbConnection.findOne({orbitYear: 2005}).then(record=>{
-        console.log(record);
-      });
-  }).catch(err=>{
-    console.log(err);
+// const readGasSummaryCSV = () => {
+//   csvdb('gas_summary.csv').then(db => {
+//       dbConnection = db;
+//       dbConnection.findOne({orbitYear: 2005}).then(record=>{
+//         console.log(record);
+//       });
+//   }).catch(err=>{
+//     console.log(err);
+//   });
+// }
+
+// readGasSummaryCSV();
+
+const csvToJSON = () => {
+  const csvFilePath = './test.csv';
+  const csv = require('csvtojson');
+  csv()
+  .fromFile(csvFilePath)
+  .then(jsonObj=>{
+
+      //console.log('CSV data loaded complete!');
+    console.log(jsonObj);
   });
+
 }
 
-readGasSummaryCSV();
-
+csvToJSON();
 
 
 
