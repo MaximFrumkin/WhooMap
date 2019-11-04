@@ -79,8 +79,9 @@ jQuery(document).ready(function () {
 
     let default_marker = {"lat": 45, "lng": -76}
     marker = L.marker(default_marker).addTo(map);
-    data_Alt_con = notify(default_marker,subArray_year)
-    console.log()
+    data_Alt_con = get_Alt_Con((lat,lan,subArray_year)
+    notify(default_marker,subArray_year,data_Alt_con)
+    console.log(data_Alt_con)
     
 
     function onMapClick(e) {
@@ -97,6 +98,11 @@ jQuery(document).ready(function () {
 
         marker = L.marker(e.latlng).addTo(map);
         latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)};
+
+        
+
+
+
         data_Alt_con = notify(latlng,subArray_year);
         console.log(data_Alt_con);
         

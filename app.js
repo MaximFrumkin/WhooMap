@@ -35,11 +35,7 @@ app.get('/data', function (req, res) {
                             &longitude=${qLng}
                             &orbitYear=${qYear}]`,
                             {data: data}).value; 
-<<<<<<< HEAD
-    console.log(qResult);   
-=======
     //console.log(qResult);   
->>>>>>> 255b448b51d46e1bea4c83ebe57743b70dd91913
     
   let RES = [];
   let resObj = {
@@ -53,7 +49,7 @@ app.get('/data', function (req, res) {
 
   RES.push(resObj);
 
-  //console.log(RES);
+  console.log(RES);
 
   res.send(RES);
 
