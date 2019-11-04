@@ -31,6 +31,8 @@ var lgroup;
 var heat;
 
 let marker;
+let latlng;
+let data_Alt_con;
 jQuery(document).ready(function () {
     jQuery(".gas").change(function (e) {
         //debugger;
@@ -86,7 +88,8 @@ jQuery(document).ready(function () {
         console.log("You clicked the map at " + e.latlng.lng);
         console.log("changed lng to num from :" + e.latlng.lng + "to :" + getRound(e.latlng.lng));
         console.log("changed lat to num from :" + e.latlng.lat + "to :" + getRound(e.latlng.lat));
-        get_Alt_Con(getRound(e.latlng.lat),getRound(e.latlng.lng))
+        //data_Alt_con = get_Alt_Con(getRound(e.latlng.lat),getRound(e.latlng.lng),subArray_year)
+        data_Alt_con = get_Alt_Con(36,-144,2005)
 
 
         if(marker != undefined){
@@ -95,7 +98,7 @@ jQuery(document).ready(function () {
         }
 
         marker = L.marker(e.latlng).addTo(map);
-        let latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)} 
+        latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)} 
         notify(latlng,subArray_year)
         
     
@@ -113,11 +116,12 @@ const getRound = (num) =>{
     return intNum
 }
 
-const get_Alt_Con = (lat, lng) =>{
+const get_Alt_Con = (lat, lng, year) =>{
     axios.get('/data',{
         params:{
             "lat": lat,
-            "lng": lng
+            "lng": lng,
+            "year": year
         }
     })
   .then(function (response) {
@@ -181,7 +185,11 @@ function createMap(gas, year) {
     }).addTo(map);;
     
     let latlng = {lat: getRound(marker.getLatLng().lat),lng:getRound(marker.getLatLng().lng)};
-    notify(latlng,subArray_year);
+    //data_Alt_con = get_Alt_Con(getRound(latlng.lat),getRound(latlng.lng),subArray_year)
+    data_Alt_con = get_Alt_Con(36,-144,2005)
+    
+    // add data_Alt_con to notify
+    notify(latlng,subArray_year);
 
 }
 function addLayer(gas, year) {
@@ -204,10 +212,6 @@ function addLayer(gas, year) {
         "radius": 70,
         "blur": 10,
     }).addTo(map);;
-    
-    
-
-    console.log("FINALLY : " + marker.getLatLng());
      
 
     
