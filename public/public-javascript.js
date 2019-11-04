@@ -98,7 +98,7 @@ jQuery(document).ready(function () {
         }
 
         marker = L.marker(e.latlng).addTo(map);
-        latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)} 
+        let latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)} 
         notify(latlng,subArray_year)
         
     

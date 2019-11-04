@@ -34,9 +34,23 @@ app.get('/data', function (req, res) {
                             &longitude=${qLng}
                             &orbitYear=${qYear}]`,
                             {data: data}).value; 
-    // console.log(qResult);   
+    //console.log(qResult);   
     
-    res.send(qResult);
+  let RES = [];
+  let resObj = {
+    altitudes: [],
+    concentrations: []
+  }
+  qResult.forEach(element => {
+    resObj.altitudes.push(element.altitude);
+    resObj.concentrations.push(element.cAvg);
+  });
+
+  RES.push(resObj);
+
+  //console.log(RES);
+
+  res.send(RES);
 
 });
 
