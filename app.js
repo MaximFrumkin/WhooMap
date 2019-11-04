@@ -1,3 +1,4 @@
+
 'use strict';
 const fs = require('fs');
 const http = require('http');
@@ -6,15 +7,16 @@ const app = express();
 
 var data = [];
 
-
 app.use(express.static('public'));
 app.use(express.static('dist'));
 app.use(express.static('data'));
+
 
 // This responds with "Hello World" on the homepage
 app.get('/', function (req, res) {
     console.log("Got a GET request for the homepage");
     res.send('Hello GET');
+
 });
 
 app.get('/data', function (req, res) {
@@ -26,6 +28,7 @@ app.get('/data', function (req, res) {
   
   // now do the json query
 
+
   var qResult = jsonQuery(`gasData[latitude=${qLat}
                             &longitude=${qLng}
                             &orbitYear=${qYear}]`,
@@ -33,6 +36,14 @@ app.get('/data', function (req, res) {
   
   console.log(qResult);                          
 });
+
+var server = app.listen(3000, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log("Example app listening at http://%s:%s", host, port);
+});
+
 
 const csvToJSON = () => {
   const csvFilePath = './test.csv';
@@ -45,7 +56,7 @@ const csvToJSON = () => {
         gasData : jsonObj
       };
         
-     console.log('CSV data loaded complete!');
+    console.log('CSV data loaded complete!');
 
     // console.log(jsonObj);
   });
