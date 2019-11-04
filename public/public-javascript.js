@@ -88,9 +88,6 @@ jQuery(document).ready(function () {
         console.log("You clicked the map at " + e.latlng.lng);
         console.log("changed lng to num from :" + e.latlng.lng + "to :" + getRound(e.latlng.lng));
         console.log("changed lat to num from :" + e.latlng.lat + "to :" + getRound(e.latlng.lat));
-        //data_Alt_con = get_Alt_Con(getRound(e.latlng.lat),getRound(e.latlng.lng),subArray_year)
-        data_Alt_con = get_Alt_Con(36,-144,2005)
-
 
         if(marker != undefined){
             
@@ -151,7 +148,7 @@ function stopMap(){
 
 
 function callMap() {
-    //debugger;
+    
     jQuery('#year').text(currentYear);
     createMap('O3', currentYear); //jQuery(".gas input[type='radio']:checked").val()
     currentYear++;
@@ -162,10 +159,7 @@ function callMap() {
 }
 
 function createMap(gas, year) {
-    //debugger;
     
-    
-
     if ((year !== null && year !== undefined) && year !== '') {
         subArray = addressPoints.filter(point => point[3] == gas && point[4] == year).map(point => [point[0],point[1],point[2]])
         subArray_year = year;
@@ -185,8 +179,8 @@ function createMap(gas, year) {
     }).addTo(map);;
     
     let latlng = {lat: getRound(marker.getLatLng().lat),lng:getRound(marker.getLatLng().lng)};
-    //data_Alt_con = get_Alt_Con(getRound(latlng.lat),getRound(latlng.lng),subArray_year)
-    data_Alt_con = get_Alt_Con(36,-144,2005)
+    
+    
     
     // add data_Alt_con to notify
     notify(latlng,subArray_year);

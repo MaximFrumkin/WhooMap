@@ -36,6 +36,7 @@ var Ozone = {
     console.log("From notify: "+ oneyear);
     Plotly.purge('myDiv');
     layout.title.text = 'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lan) + '° W';
+  
     Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
     
   };
