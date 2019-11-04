@@ -4,6 +4,9 @@ const http = require('http');
 const express = require('express');
 const app = express();
 
+var data = [];
+
+
 app.use(express.static('public'));
 app.use(express.static('dist'));
 app.use(express.static('data'));
@@ -21,9 +24,14 @@ app.get('/data', function (req, res) {
   let qLng = req.query.lng;
   let qYear = req.query.year;
   
-  //
+  // now do the json query
 
-
+  var qResult = jsonQuery(`gasData[latitude=${qLat}
+                            &longitude=${qLng}
+                            &orbitYear=${qYear}]`,
+                            {data: data}).value;
+  
+  console.log(qResult);                          
 });
 
 const csvToJSON = () => {
@@ -33,9 +41,13 @@ const csvToJSON = () => {
   .fromFile(csvFilePath)
   .then(jsonObj=>{
 
-      console.log('CSV data loaded complete!');
+      data = {
+        gasData : jsonObj
+      };
+        
+     console.log('CSV data loaded complete!');
 
-    //console.log(jsonObj);
+    // console.log(jsonObj);
   });
 
 }
