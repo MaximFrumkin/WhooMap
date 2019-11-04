@@ -2,9 +2,6 @@
 const fs = require('fs');
 const http = require('http');
 const express = require('express');
-
-
-
 const app = express();
 
 app.use(express.static('public'));
@@ -19,32 +16,15 @@ app.get('/', function (req, res) {
 
 app.get('/data', function (req, res) {
   console.log(req.query);
+
+  let qLat = req.query.lat;
+  let qLng = req.query.lng;
+  let qYear = req.query.year;
   
-  
+  //
+
+
 });
-
-
-
-var server = app.listen(3000, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log("Example app listening at http://%s:%s", host, port);
-});
-
-
-// const readGasSummaryCSV = () => {
-//   csvdb('gas_summary.csv').then(db => {
-//       dbConnection = db;
-//       dbConnection.findOne({orbitYear: 2005}).then(record=>{
-//         console.log(record);
-//       });
-//   }).catch(err=>{
-//     console.log(err);
-//   });
-// }
-
-// readGasSummaryCSV();
 
 const csvToJSON = () => {
   const csvFilePath = './test.csv';
@@ -53,54 +33,22 @@ const csvToJSON = () => {
   .fromFile(csvFilePath)
   .then(jsonObj=>{
 
-      //console.log('CSV data loaded complete!');
-    console.log(jsonObj);
+      console.log('CSV data loaded complete!');
+
+    //console.log(jsonObj);
   });
 
 }
 
-csvToJSON();
+var server = app.listen(3000, function () {
+    var host = server.address().address;
+    var port = server.address().port;
 
+    console.log("Example app listening at http://%s:%s", host, port);
 
-
-
-
-
-
-
-/*
-
-fs.readFile('public/index.html', function (err, html) {
-    if (err) {
-        throw err; 
-    }       
-    http.createServer(function(request, response) {  
-        response.writeHeader(200, {"Content-Type": "text/html"});  
-        response.write(html);  
-        response.end();  
-    }).listen(3000);
+    csvToJSON();
 });
 
 
-let rawdata = fs.readFileSync('public/gpr_000b11a_e.json');
-let geojson_parsed = JSON.parse(rawdata);
-
-app.get('/map_data', function (req, res) {
-    log('This is my text', function (err) {
-      if (err) throw err;
-      res.send(geojson_parsed);
-    });
-  });
 
 
-
-app.get('/save', function (req, res) {
-  fs.writeFile('log.txt', 'This is my text', function (err) {
-    if (err) throw err;
-    console.log('Replaced!');
-    res.send('Replaced!')
-  });
-})
-
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
-*/
