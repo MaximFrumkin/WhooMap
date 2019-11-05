@@ -31,19 +31,14 @@ var Ozone = {
   var lat = 0;
   var lng = 0;
   var oneyear = 0;
+  let words = ""
 
   function notify(latlng,year,resdata){
     lat = latlng.lat;
     lng = latlng.lng;
     oneyear =  year;
     dataset = resdata;
-
-
-    console.log("From notify: "+ lat);
-    console.log("From notify: "+ lng);
-    console.log("From notify: "+ oneyear);
-    Plotly.purge('myDiv');
-    layout.title.text = 'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lng) + '° W';
+    
     console.log(dataset[0].Ozone)
     console.log(dataset)
     if (dataset[0].Ozone.altitudes.length > 0){
@@ -72,7 +67,19 @@ var Ozone = {
       data[2].y = []
     }
 
-    console.log(data)
+
+    words = ""
+    if(data[0].x.length === 0){
+      words = "No Data Measurement"
+    }
+    
+
+
+    console.log("From notify: "+ lat);
+    console.log("From notify: "+ lng);
+    console.log("From notify: "+ oneyear);
+    Plotly.purge('myDiv');
+    layout.title.text = 'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lng) + '° W '+words;
 
 
 
@@ -81,7 +88,7 @@ var Ozone = {
  
   var layout = {
     title: {
-      text:'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lng) + '° W',
+      text:'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lng) + '° W ',
       font: {
         family: 'Courier New, monospace',
         size: 24
@@ -91,7 +98,7 @@ var Ozone = {
     },
     xaxis: {
       title: {
-        text: 'Altitude (units)',
+        text: 'Altitude (Km)',
         font: {
           family: 'Courier New, monospace',
           size: 18,
@@ -101,7 +108,7 @@ var Ozone = {
     },
     yaxis: {
       title: {
-        text: 'Concentration (units)',
+        text: 'Concentration (Deviation from Mean)',
         font: {
           family: 'Courier New, monospace',
           size: 18,

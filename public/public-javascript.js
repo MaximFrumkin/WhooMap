@@ -51,25 +51,39 @@ jQuery(document).ready(function () {
     }).addTo(map);
     console.log("FIre3")
     // ToDo must filter specific year
-    subArrayPos = addressPoints.filter(point => point[3] == 'O3' && point[2] >=0 ).map(point => [point[0],point[1],point[2]])
-    subArrayNeg = addressPoints.filter(point => point[3] == 'O3'&& point[2] < 0).map(point => [point[0],point[1],point[2]])
+    subArrayPos = addressPoints.filter(point => point[3] == 'O3' && point[2] >=0 && point[4] == 2004).map(point => [point[0],point[1],point[2]])
+    subArrayNeg = addressPoints.filter(point => point[3] == 'O3'&& point[2] < 0 && point[4] == 2004).map(point => [point[0],point[1],point[2]])
+    subArrayPos.push([59,-34,-5])
+    subArrayNeg.push([59,-34,5])
+
+    /*
+     addressPoints.push([
+        item.Location.Latitude,
+        item.Location.Longitude,
+        item.NormConcentration,
+        item.GasID,
+        item.orbitYear
+    ]);
+    */
+
+
     // ToDo must filter specific year
-    subArray_year = 2005;
+    subArray_year = 2004;
 
     
     
     heat = L.heatLayer(subArrayPos, {
         "id": 'layer1',
-        "gradient": {0: 'white', 0.2: 'lightyellow', 0.4: 'yellow', 0.5: 'green', 0.6: 'blue', 0.7:'darkblue' },
-        "radius": 70,
-        "blur": 10,
+        "gradient": {0: 'white', 0.2: 'yellow', 0.4: 'orange', 0.5: 'Salmon', 0.6: 'red', 0.7:'darkred'},
+        "radius": 30,
+        "blur": 10
     }).addTo(map);
 
-    heat = L.heatLayer(subArrayNeg, {
+    heatneg = L.heatLayer(subArrayNeg, {
         "id": 'layer2',
-        "gradient": {0: 'white', 0.2: 'lightyellow', 0.4: 'yellow', 0.5: 'orange', 0.6: 'red', 0.7:'darkred' },
-        "radius": 70,
-        "blur": 10,
+        "gradient": {0: 'white', 0.2: 'lightgreen', 0.4: 'green', 0.5: 'lightblue', 0.6: 'blue', 0.7:'darkblue'},
+        "radius": 30,
+        "blur": 10
     }).addTo(map);
 
 
@@ -180,7 +194,17 @@ function callMap() {
 function createMap(gas, year) {
     
     if ((year !== null && year !== undefined) && year !== '') {
-        subArray = addressPoints.filter(point => point[3] == gas && point[4] == year).map(point => [point[0],point[1],point[2]])
+        subArrayPos = addressPoints.filter(point => point[3] == gas && point[2] >=0 && point[4] == year).map(point => [point[0],point[1],point[2]]);
+
+        subArrayNeg = addressPoints.filter(point => point[3] == gas && point[2] <0 && point[4] == year).map(point => [point[0],point[1],point[2]]);
+        subArrayPos.push([59,-34,-5])
+        subArrayNeg.push([59,-34,5])
+
+
+
+
+
+
         subArray_year = year;
     } else {
         console.log("BIGFAIL")
@@ -189,23 +213,36 @@ function createMap(gas, year) {
     //--- Remove existing Map if exits
     if (typeof map !== 'undefined') {
         map.removeLayer(heat);
+        map.removeLayer(heatneg);
     }
-    heat = L.heatLayer(subArray, {
+    heat = L.heatLayer(subArrayPos, {
         "id": 'layer1',
-        "gradient": { 0.4: 'yellow', 0.5: 'red', .6: 'blue' },
-        "radius": 70,
-        "blur": 10,
-    }).addTo(map);;
+        "gradient": {0: 'white', 0.2: 'yellow', 0.4: 'orange', 0.5: 'Salmon', 0.6: 'red', 0.7:'darkred'},
+        "radius": 30,
+        "blur": 10
+    }).addTo(map);
+
+    heatneg = L.heatLayer(subArrayNeg, {
+        "id": 'layer2',
+        "gradient": {0: 'white', 0.2: 'lightgreen', 0.4: 'green', 0.5: 'lightblue', 0.6: 'blue', 0.7:'darkblue'},
+        "radius": 30,
+        "blur": 10
+    }).addTo(map);
+
     
     let latlng = {lat: getRound(marker.getLatLng().lat),lng:getRound(marker.getLatLng().lng)};
-    
     
     get_Alt_Con(latlng.lat,latlng.lng,subArray_year)
 
 }
 function addLayer(gas, year) {
     if (year !== null && year !== '') {
-        subArray = addressPoints.filter(point => point[3] == gas && point[4] == year);
+        subArrayPos = addressPoints.filter(point => point[3] == gas && point[2] >=0 && point[4] == year).map(point => [point[0],point[1],point[2]]);
+
+        subArrayNeg = addressPoints.filter(point => point[3] == gas && point[2] <0 && point[4] == year).map(point => [point[0],point[1],point[2]]);
+
+        subArrayPos.push([59,-34,-5])
+        subArrayNeg.push([59,-34,5])
         subArray_year = year
     } else {
         subArray = addressPoints.filter(point => point[3] == gas);
@@ -217,12 +254,19 @@ function addLayer(gas, year) {
         debugger;
         map.remove(heat);
     }
-    heat = L.heatLayer(subArray, {
+    heat = L.heatLayer(subArrayPos, {
         "id": 'layer1',
-        "gradient": { 0.4: 'yellow', 0.5: 'red', .6: 'blue' },
-        "radius": 70,
-        "blur": 10,
-    }).addTo(map);;
+        "gradient": {0: 'white', 0.2: 'yellow', 0.4: 'orange', 0.5: 'Salmon', 0.6: 'red', 0.7:'darkred'},
+        "radius": 30,
+        "blur": 10
+    }).addTo(map);
+
+    heatneg = L.heatLayer(subArrayNeg, {
+        "id": 'layer2',
+        "gradient": {0: 'white', 0.2: 'lightgreen', 0.4: 'green', 0.5: 'lightblue', 0.6: 'blue', 0.7:'darkblue'},
+        "radius": 30,
+        "blur": 10
+    }).addTo(map);
      
 
     

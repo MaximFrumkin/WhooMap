@@ -27,7 +27,7 @@ app.get('/data', function (req, res) {
   let qLng = parseInt(req.query.lng);
   let qYear = parseInt(req.query.year);
 
-  let incr = 5;
+  let incr = 0;
   let qLathi = qLat +incr;
   let qLatlo = qLat -incr;
 
