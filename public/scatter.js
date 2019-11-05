@@ -79,7 +79,7 @@ var Ozone = {
     console.log("From notify: "+ lng);
     console.log("From notify: "+ oneyear);
     Plotly.purge('myDiv');
-    layout.title.text = 'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lng) + '° W '+words;
+    layout.title.text = 'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lng) + '° W <br>'+words;
 
 
 
@@ -91,7 +91,7 @@ var Ozone = {
       text:'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lng) + '° W ',
       font: {
         family: 'Courier New, monospace',
-        size: 24
+        size: 18
       },
       xref: 'paper',
       x: 0.05,

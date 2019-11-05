@@ -27,30 +27,42 @@
 
 </head>
 <body>
+    <div class="row">
+        <div class="bo">
+            <div id="map"></div>
+            
+            
+            <div align="left" style="font-family:Calibri;font-size:24px; width:200px; border:1px solid #ddd;">
+                <button id="play" onclick="javascript:playMap();">Play ></button> <span id="year">2004</span>
+                <button id="stop" onclick="javascript:stopMap();">Stop ></button> </span>
+            </div>
 
-    <div id="map" style="width:1500px; height:500px;"></div>
+            <!-- <script src="../node_modules/simpleheat/simpleheat.js"></script>
+            <script src="../src/HeatLayer.js"></script> -->
+
+            <!--<script src="dist/leaflet-heat.js"></script>-->
+            
+            
+
+            <!--<div id="slider" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+            <div style="margin-right: auto; margin-left: auto; width: 90%; margin-bottom: 10px; text-align: center;">
+                <input type="number" min='1' max='2019' id="input-number-min">
+                <input type="number" min='2' max='35676000' id="input-number-max">
+            </div>-->
+            <input type="radio" id="Ozone" name="gas" class="gas" value="O3" checked onclick="javascript: createMap('O3');">Ozone<br>
+            <input type="radio" id="CH4" name="gas" class="gas" value="CH4" onclick="javascript: createMap('CH4');">Methane gas<br>
+            <input type="radio" id="CO2" name="gas" class="gas" value="CO2" onclick="javascript: createMap('CO2');">Carbon Dioxide<br>
+
+
+        </div>
+        
+
+        <div class="bo">
+            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+        </div>
+    </div>
     
-    <div id="ss" style="font-family:Calibri;font-size:22px; height:35px;width:400px;margin:0 auto;padding:5px; border:1px solid #ddd;text-align:center;">
-        <button id="play" onclick="javascript:playMap();">Play ></button> <span id="year">2004</span>
-        <button id="stop" onclick="javascript:stopMap();">Stop ></button> </span></div>
-
-    <!-- <script src="../node_modules/simpleheat/simpleheat.js"></script>
-    <script src="../src/HeatLayer.js"></script> -->
-
-    <!--<script src="dist/leaflet-heat.js"></script>-->
-    
-    
-
-    <!--<div id="slider" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
-    <div style="margin-right: auto; margin-left: auto; width: 90%; margin-bottom: 10px; text-align: center;">
-        <input type="number" min='1' max='2019' id="input-number-min">
-        <input type="number" min='2' max='35676000' id="input-number-max">
-    </div>-->
-    <input type="radio" id="Ozone" name="gas" class="gas" value="O3" checked onclick="javascript: createMap('O3');">Ozone<br>
-    <input type="radio" id="CH4" name="gas" class="gas" value="CH4" onclick="javascript: createMap('CH4');">Methane gas<br>
-    <input type="radio" id="CO2" name="gas" class="gas" value="CO2" onclick="javascript: createMap('CO2');">Carbon Dioxide<br>
-
-    <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
     <script src="scatter.js"></script>
+    
 </body>
 </html>
