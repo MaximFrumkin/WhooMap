@@ -7,7 +7,7 @@ Displays a graphical reperesentation of environmental data, such ozone concentra
 https://github.com/MaximFrumkin/WhooMap/
 
 ## Download Big Data Files
- two files  
+
 https://whoomapdata.s3.ca-central-1.amazonaws.com/gas_summary.csv
 
 put *gas_summary.csv* at root directory.
