@@ -1,271 +1,68 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <title>d3.js with leaflet.js</title>
-    <style>
-        @import url(http://cdn.leafletjs.com/leaflet-0.6.1/leaflet.css);
-    </style>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <title>Leaflet.heat demo</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+    
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous"></script>
 
-
-
-
-    <!--<script src="utils.js"></script> -->
-
-
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+    <script src="dist/myData.js"></script>
+    <script src="public-javascript.js"></script>
+    <link rel="stylesheet" href="style.css">
 
 </head>
-
 <body>
+    <div class="row">
+        <div class="bo">
+            <div id="map"></div>
+            
+            
+            <div align="left" style="font-family:Calibri;font-size:24px; width:200px; border:1px solid #ddd;">
+                <button id="play" onclick="javascript:playMap();">Play ></button> <span id="year">2004</span>
+                <button id="stop" onclick="javascript:stopMap();">Stop ></button> </span>
+            </div>
 
-    <div id="map" style="width: 1600px; height: 1200px"></div>
+            <!-- <script src="../node_modules/simpleheat/simpleheat.js"></script>
+            <script src="../src/HeatLayer.js"></script> -->
 
-    <script>
-        //const sample = fetch('mock.json').then(res => res.json()).then(data => console.log(data));
+            <!--<script src="dist/leaflet-heat.js"></script>-->
+            
+            
 
-        var map = L.map('map').setView([43.4516,-80.31246], 13);
-        // mapLink = 
-        //     '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-        // L.tileLayer(
-        //     'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //     attribution: '&copy; ' + mapLink + ' Contributors',
-        //     maxZoom: 18,
-        //     }).addTo(map);
-
-        var toolserver = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png');
-        var stamen = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', { attribution: 'Add some attributes here!' }).addTo(map);
-        var baseLayers = { "stamen": stamen, "toolserver-mapnik": toolserver };
-        L.control.layers(baseLayers).addTo(map);
-        console.log("FI");
-
-
-        //for the shapefiles in the folder called 'files' with the name pandr.shp
-        /*const polystyle = {
-            fillColor: 'blue',
-            weight: 2,
-            opacity: 1,
-            color: 'red',  //Outline color
-            fillOpacity: 0.7
-        };
-        
-        L.geoJson(geojson_parsed, { style: polystyle }).addTo(map);
-        */
+            <!--<div id="slider" style="top: 0px; right: 1px; margin: 10px 25px;"></div>
+            <div style="margin-right: auto; margin-left: auto; width: 90%; margin-bottom: 10px; text-align: center;">
+                <input type="number" min='1' max='2019' id="input-number-min">
+                <input type="number" min='2' max='35676000' id="input-number-max">
+            </div>-->
+            <input type="radio" id="Ozone" name="gas" class="gas" value="O3" checked onclick="javascript: createMap('O3');">Ozone<br>
+            <input type="radio" id="CH4" name="gas" class="gas" value="CH4" onclick="javascript: createMap('CH4');">Methane gas<br>
+            <input type="radio" id="CO2" name="gas" class="gas" value="CO2" onclick="javascript: createMap('CO2');">Carbon Dioxide<br>
 
 
-
-
-        // Initialize the SVG layer
-        map._initPathRoot()
-        // We pick up the SVG from the map object
-        var svg = d3.select("#map").select("svg"),
-            g = svg.append("g");
-
+        </div>
         
 
-        d3.json("circles.json", function (collection) {
-            // Add a LatLng object to each item in the dataset
-            collection.objects.forEach(function (d) {
-                d.LatLng = new L.LatLng(d.circle.coordinates[0],d.circle.coordinates[1])
-
-                console.log(d.LatLng);
-                console.log(d.LatLng);
-                
-                console.log(d.circle.color)
-
-
-                var getcolor = function(bird, obj){
-                    // small number of birds means Learge Green number = 255
-                    console.log(obj);
-                    console.log("YES");
-                    
-                    
-                    
-                    var rate = 205
-
-
-                    return "rgb(50, "+ rate.toString() + ", 50)"
-                }
-
-                var feature = g.selectAll("circle")
-                    .data(collection.objects)
-                    .enter().append("circle")
-                    .style("stroke", "black")
-                    .style("fill", function(d){return d.circle.color})
-                    //.style("fill", getcolor(20/*bird*/))
-                    .attr("r", 20);
-
-                    /*
-                    feature[0].forEach(function(element){
-                    console.log(element);
-                    
-                    
-                    })*/
-
-                
-                
-
-
-                
-                
-                
-                //console.log(feature[0].findIndex());
-                
-
-                // console.log(feature);
-
-                // console.log(feature);
-
-                // console.log(feature[0]);
-
-                // console.log(feature[0][0]);
-                
-
-                /*
-                g.each(function(i) {
-                    this.attr('', 'shiny_new_id_' + i)
-                    })
-
-                */
-
-
-                /*
-                feature.forEach(function(element){
-                    console.log(element);
-                    
-                    if(element.Province == 62){
-                        console.log("YES");
-                        element.style("fill", "black")
-                        
-                    }
-
-                });
-                */
-                map.on("viewreset", update);
-                update();
-
-                function update() {
-                    feature.attr("transform",
-                        function (da) {
-                            console.log(da.LatLng);
-                            try{
-                                return "translate(" +
-                                map.latLngToLayerPoint(da.LatLng).x + "," +
-                                map.latLngToLayerPoint(da.LatLng).y + ")";
-                            }catch(e){
-                                console.log(e);
-                                
-
-                            }
-                            
-                        }
-                    )
-                }
-
-
-
-                
-            })
-
-                /*
-                for (var i = 0; i < 5; i++) {
-                svg.append("rect").attr("id", "rec" + i).attr("x", i * 30 + 10).attr("class", "rec");
-                }
-                
-
-                g.forEach(function(element){
-                    console.log(element);
-                    
-                })
-                */
-
-                // var getcolor = function(bird, obj){
-                //     // small number of birds means Learge Green number = 255
-                //     console.log(obj);
-                //     console.log("YES");
-                    
-                    
-                    
-                //     var rate = 205
-
-
-                //     return "rgb(50, "+ rate.toString() + ", 50)"
-                // }
-
-                // var feature = g.selectAll("circle")
-                //     .data(collection.objects)
-                //     .enter().append("circle")
-                //     .style("stroke", "black")
-                //     //.style("fill", getcolor(20/*bird*/))
-                //     .attr("r", 20);
-
-                //     /*
-                //     feature[0].forEach(function(element){
-                //     console.log(element);
-                    
-                    
-                //     })*/
-
-                
-                
-
-
-                
-                
-                
-                // //console.log(feature[0].findIndex());
-                
-
-                // // console.log(feature);
-
-                // // console.log(feature);
-
-                // // console.log(feature[0]);
-
-                // // console.log(feature[0][0]);
-                
-
-                // /*
-                // g.each(function(i) {
-                //     this.attr('', 'shiny_new_id_' + i)
-                //     })
-
-                // */
-
-
-                // /*
-                // feature.forEach(function(element){
-                //     console.log(element);
-                    
-                //     if(element.Province == 62){
-                //         console.log("YES");
-                //         element.style("fill", "black")
-                        
-                //     }
-
-                // });
-                // */
-
-                // map.on("viewreset", update);
-                // update();
-
-                // function update() {
-                //     feature.attr("transform",
-                //         function (d) {
-                //             return "translate(" +
-                //                 map.latLngToLayerPoint(d.LatLng).x + "," +
-                //                 map.latLngToLayerPoint(d.LatLng).y + ")";
-                //         }
-                //     )
-                // }
-
-        })
-    </script>
+        <div class="bo">
+            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+        </div>
+    </div>
+    
+    <script src="scatter.js"></script>
+    
 </body>
-
 </html>
