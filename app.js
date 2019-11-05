@@ -23,29 +23,76 @@ app.get('/', function (req, res) {
 app.get('/data', function (req, res) {
   console.log(req.query);
 
-  let qLat = req.query.lat;
-  let qLng = req.query.lng;
-  let qYear = req.query.year;
+  let qLat = parseInt(req.query.lat);
+  let qLng = parseInt(req.query.lng);
+  let qYear = parseInt(req.query.year);
+
+  let incr = 5;
+  let qLathi = qLat +incr;
+  let qLatlo = qLat -incr;
+
+  let qLnghi = qLng +incr;
+  let qLnglo = qLng -incr;
+
+
+
   
   
   // now do the json query
 
-
-  var qResult = jsonQuery(`gasData[*latitude=${qLat}
-                            &longitude=${qLng}
+  // This is wrong comparison but Works
+  var qResult = jsonQuery(`gasData[*latitude>=${qLatlo}
+                            &latitude<=${qLathi}
+                            &longitude<=${qLnglo}
+                            &longitude>=${qLnghi}
                             &orbitYear=${qYear}]`,
                             {data: data}).value; 
-    //console.log(qResult);   
+
+
+  
+
+  qResult.forEach(element =>{
+    console.log(element.latitude + ": "+ element.longitude + ":qLnghi-> "+ qLnghi +":qLnglo-> " +qLnglo)
+    
+  })
+                            
+
     
   let RES = [];
   let resObj = {
-    altitudes: [],
-    concentrations: []
-  }
-  qResult.forEach(element => {
-    resObj.altitudes.push(element.altitude);
-    resObj.concentrations.push(element.cAvg);
-  });
+    Methane:{
+      altitudes: [],
+      concentrations: []
+    },
+    Ozone: {
+      altitudes: [],
+      concentrations: []
+    },
+    CarbonDioxide: {
+      altitudes: [],
+      concentrations: []
+    }
+  };
+
+
+  if (qResult.length > 1){
+
+    qResult.forEach((element) => {
+      if(element.gasID ==='3'){
+        resObj.Methane.altitudes.push(element.altitude)
+        resObj.Methane.concentrations.push(element.vAvg)
+      }else if (element.gasID ==='4'){
+        resObj.CarbonDioxide.altitudes.push(element.altitude)
+        resObj.CarbonDioxide.concentrations.push(element.vAvg)
+      }else if (element.gasID ==='6'){
+        resObj.Ozone.altitudes.push(element.altitude)
+        resObj.Ozone.concentrations.push(element.vAvg)
+      }
+    });
+  };
+
+   
+  
 
   RES.push(resObj);
 

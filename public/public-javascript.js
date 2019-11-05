@@ -51,18 +51,30 @@ jQuery(document).ready(function () {
     }).addTo(map);
     console.log("FIre3")
     // ToDo must filter specific year
-    subArray = addressPoints.filter(point => point[3] == 'O3').map(point => [point[0],point[1],point[2]])
+    subArrayPos = addressPoints.filter(point => point[3] == 'O3' && point[2] >=0 ).map(point => [point[0],point[1],point[2]])
+    subArrayNeg = addressPoints.filter(point => point[3] == 'O3'&& point[2] < 0).map(point => [point[0],point[1],point[2]])
     // ToDo must filter specific year
     subArray_year = 2005;
 
     
     
-    heat = L.heatLayer(subArray, {
+    heat = L.heatLayer(subArrayPos, {
         "id": 'layer1',
-        "gradient": { 0.4: 'yellow', 0.5: 'red', .6: 'blue' },
+        "gradient": {0: 'white', 0.2: 'lightyellow', 0.4: 'yellow', 0.5: 'green', 0.6: 'blue', 0.7:'darkblue' },
         "radius": 70,
         "blur": 10,
     }).addTo(map);
+
+    heat = L.heatLayer(subArrayNeg, {
+        "id": 'layer2',
+        "gradient": {0: 'white', 0.2: 'lightyellow', 0.4: 'yellow', 0.5: 'orange', 0.6: 'red', 0.7:'darkred' },
+        "radius": 70,
+        "blur": 10,
+    }).addTo(map);
+
+
+
+
     /*
     console.log("FIre5")
     map.addLayer(heat)
@@ -79,12 +91,11 @@ jQuery(document).ready(function () {
 
     let default_marker = {"lat": 45, "lng": -76}
     marker = L.marker(default_marker).addTo(map);
-    data_Alt_con = get_Alt_Con((lat,lan,subArray_year)
-    notify(default_marker,subArray_year,data_Alt_con)
-    console.log(data_Alt_con)
+    
+    get_Alt_Con(default_marker.lat,default_marker.lng,subArray_year)
     
 
-    function onMapClick(e) {
+    async function onMapClick(e) {
         console.log("You clicked the map at " + e.latlng);
 
         console.log("You clicked the map at " + e.latlng.lng);
@@ -99,14 +110,8 @@ jQuery(document).ready(function () {
         marker = L.marker(e.latlng).addTo(map);
         latlng = {lat: getRound(e.latlng.lat),lng:getRound(e.latlng.lng)};
 
+        get_Alt_Con(latlng.lat,latlng.lng,subArray_year)
         
-
-
-
-        data_Alt_con = notify(latlng,subArray_year);
-        console.log(data_Alt_con);
-        
-    
     }
     
     map.on('click', onMapClick);
@@ -121,6 +126,9 @@ const getRound = (num) =>{
     return intNum
 }
 
+
+
+
 const get_Alt_Con = (lat, lng, year)=>{
     axios.get('/data',{
         params:{
@@ -131,8 +139,10 @@ const get_Alt_Con = (lat, lng, year)=>{
     })
   .then(function (response) {
     // handle success
-    console.log(response);
-    return response
+    console.log(response.data);
+    let latlng ={"lat": lat, "lng":lng};
+    notify(latlng,year,response.data)
+    return("AWESOME")
   })
   .catch(function (error) {
     // handle error
@@ -147,7 +157,7 @@ const get_Alt_Con = (lat, lng, year)=>{
 
 
 function playMap() {
-    timer = setInterval(callMap, 1000);
+    timer = setInterval(callMap, 1500);
 
 }
 
@@ -189,9 +199,8 @@ function createMap(gas, year) {
     
     let latlng = {lat: getRound(marker.getLatLng().lat),lng:getRound(marker.getLatLng().lng)};
     
-    // add data_Alt_con to notify
-    data_Alt_con = notify(latlng,subArray_year);
-    console.log(data_Alt_con);
+    
+    get_Alt_Con(latlng.lat,latlng.lng,subArray_year)
 
 }
 function addLayer(gas, year) {

@@ -1,89 +1,87 @@
 
 
 var Ozone = {
-    x: [1, 2, 3, 4],
-    y: [10, 15, 13, 17],
+    x: [],
+    y: [],
     mode: 'markers',
     name: 'Ozone',
-    marker: { size: 12 }
+    marker: { size: 12 },
+    text:"aaa"
   };
   
   var Methane = {
-    x: [2, 3, 4, 5],
-    y: [16, 5, 11, 10],
+    x: [],
+    y: [],
     mode: 'markers',
     name: 'Methane',
-    marker: { size: 12 }
+    marker: { size: 12 },
+    text:"aaa"
   };
   
   var CarbonDioxide = {
-    x: [1, 2, 3, 4],
-    y: [12, 9, 15, 12],
+    x: [],
+    y: [],
     mode: 'markers',
     name: 'Carbon Dioxide',
-    marker: { size: 12 }
+    marker: { size: 12 },
+    text:["aaa"]
   };
   
   var data = [ Ozone, Methane, CarbonDioxide ];
   var lat = 0;
-  var lan = 0;
+  var lng = 0;
   var oneyear = 0;
 
-  async function notify(latlan,year,data){
-    lat = latlan.lat;
-    lan = latlan.lng;
+  function notify(latlng,year,resdata){
+    lat = latlng.lat;
+    lng = latlng.lng;
     oneyear =  year;
-    dataset = data;
+    dataset = resdata;
+
+
     console.log("From notify: "+ lat);
-    console.log("From notify: "+ lan);
+    console.log("From notify: "+ lng);
     console.log("From notify: "+ oneyear);
     Plotly.purge('myDiv');
-    layout.title.text = 'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lan) + '° W';
-    /*
+    layout.title.text = 'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lng) + '° W';
+    console.log(dataset[0].Ozone)
+    console.log(dataset)
+    if (dataset[0].Ozone.altitudes.length > 0){
+      data[0].x = dataset[0].Ozone.altitudes
+      data[0].y = dataset[0].Ozone.concentrations
+    }else{
+      data[0].x = []
+      data[0].y = []
+    }
 
-    let promise = new Promise((res, rej) => {
-      get_Alt_Con((lat,lan,subArray_year) => res(ansData))
-    });
-    // wait until the promise returns us a value
-    data_Alt_con = await promise;
-    
-    console.log(data_Alt_con)
-    */
-    Plotly.newPlot('myDiv', data_Alt_con, layout, {showSendToCloud: true});
-    
-    data[0].x = []; //GasID4
-    data[0].y = []; //GasID4  
-    data[1].x = []; //GasID5
-    data[1].y = []; //GasID5
-    data[2].x = []; //GasID6
-    data[2].y = []; //GasID6
-    console.log("FFFFFF")
-    console.log(data_Alt_con)
-    /*try{
-      data_Alt_con.forEach(function(element){
-        if(element.gasID ==='4'){
-          data[0].x.push(element.altitude)
-          data[0].y.push(element.cAvg)
-        }else if (element.gasID ==='5'){
-          data[1].x.push(element.altitude)
-          data[1].y.push(element.cAvg)
-        }else if (element.gasID ==='6'){
-          data[2].x.push(element.altitude)
-          data[2].y.push(element.cAvg)
-        } 
-      });
-    }catch(e){
-      console.log(e)
+    if (dataset[0].Methane.altitudes.length > 0){
+      
+      data[1].x = dataset[0].Methane.altitudes
+      data[1].y = dataset[0].Methane.concentrations
+      
+    }else{
+      data[1].x = []
+      data[1].y = []
+    }
 
-    }*/
+    if (dataset[0].CarbonDioxide.altitudes.length > 0){
+      data[2].x = dataset[0].CarbonDioxide.altitudes
+      data[2].y = dataset[0].CarbonDioxide.concentrations
+    }else{
+      data[2].x = []
+      data[2].y = []
+    }
 
-    
-    
+    console.log(data)
+
+
+
+    Plotly.newPlot('myDiv', data, layout, {showSendToCloud: true});
   };
  
   var layout = {
     title: {
-      text:'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lan) + '° W',
+      text:'Concentration vs Altitude, ' + oneyear + ', ' + lat + '° N' + ', ' + (-1 * lng) + '° W',
       font: {
         family: 'Courier New, monospace',
         size: 24
