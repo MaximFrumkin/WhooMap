@@ -6,7 +6,7 @@ var Ozone = {
     mode: 'markers',
     name: 'Ozone',
     marker: { size: 12 },
-    text:"aaa"
+    text:"Ozone"
   };
   
   var Methane = {
@@ -15,7 +15,7 @@ var Ozone = {
     mode: 'markers',
     name: 'Methane',
     marker: { size: 12 },
-    text:"aaa"
+    text:"Methane"
   };
   
   var CarbonDioxide = {
@@ -24,7 +24,7 @@ var Ozone = {
     mode: 'markers',
     name: 'Carbon Dioxide',
     marker: { size: 12 },
-    text:["aaa"]
+    text:["Carbon Dioxide"]
   };
   
   var data = [ Ozone, Methane, CarbonDioxide ];
