@@ -1,5 +1,5 @@
 # WhooMap
-Displays a graphical reperesentation of environmental data, such as ozone concentration and altitude in Canada.
+Displays a graphical representation of environmental data, such as ozone concentration and altitude in Canada.
 
 # How to start
 
